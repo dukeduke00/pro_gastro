@@ -8,10 +8,14 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">O nama</a>
+                    <a class="nav-link active" aria-current="page" href="/">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Kontakt</a>
+                    <a class="nav-link active" aria-current="page" href="/">Contact</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ route('cart.all')}}">Cart</a>
                 </li>
 
 
