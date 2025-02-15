@@ -15,26 +15,50 @@ class CartController extends Controller
     {
         $cart = Session::get('product', []); // Ako nema podataka, vrati prazan niz
 
-        if (empty($cart)) { // Provera da li je korpa prazna
-            return view('cart', ['combinedItems' => [], 'emptyCart' => true]);
+        if (empty($cart)) { // Provjera da li je korpa prazna
+            return view('cart', ['combinedItems' => [], 'emptyCart' => true, 'totalCartPrice' => 0]);
         }
 
         $combined = [];
+        $totalCartPrice = 0;
 
         foreach ($cart as $item) {
             $product = Products::firstWhere('id', $item['product_id']);
 
             if ($product) {
+                $totalItemPrice = $product->price * $item['amount'];
+                $totalCartPrice += $totalItemPrice;
+
                 $combined[] = [
                     'name' => $product->name,
                     'amount' => $item['amount'],
                     'price' => $product->price,
-                    'total' => $product->price * $item['amount'],
+                    'total' => $totalItemPrice,
+                    'image' => $product->image,
                 ];
             }
         }
 
-        return view('cart', ['combinedItems' => $combined, 'emptyCart' => false]);
+        return view('cart', [
+            'combinedItems' => $combined,
+            'emptyCart' => false,
+            'totalCartPrice' => $totalCartPrice
+        ]);
+    }
+
+
+    public function removeItem(Request $request)
+    {
+        $cart = Session::get('product', []); // Dohvati trenutnu korpu
+        $index = $request->input('index'); // Dohvati indeks artikla koji treba da se izbriše
+
+        if (isset($cart[$index])) {
+            unset($cart[$index]); // Ukloni stavku sa datog indeksa
+            $cart = array_values($cart); // Resetuj indekse nakon brisanja
+            Session::put('product', $cart); // Ažuriraj korpu u sesiji
+        }
+
+        return response()->json(['success' => true]); // Vratimo odgovor
     }
 
 
@@ -54,7 +78,7 @@ class CartController extends Controller
         // Dohvati trenutnu korpu
         $cart = Session::get('product', []);
 
-        // Proveri da li proizvod već postoji u korpi
+        // Provjeri da li proizvod već postoji u korpi
         $found = false;
         foreach ($cart as &$item) {
             if ($item['product_id'] == $request->id) {
@@ -84,7 +108,7 @@ class CartController extends Controller
         $cart = Session::get('product');
         $totalPrice = 0;
 
-        // Ako postoji nova količina u zahtevu
+        // Ako postoji nova količina u zahtjevu
         if ($request->has('amounts')) {
             $amounts = json_decode($request->input('amounts'), true);
 
@@ -101,7 +125,7 @@ class CartController extends Controller
         foreach ($cart as $item) {
             $product = Products::firstWhere(['id' => $item['product_id']]);
 
-            // Ako količina prelazi raspoloživu količinu, preusmeri korisnika
+            // Ako količina prelazi raspoloživu količinu, preusmjeri korisnika
             if ($item['amount'] > $product->quantity) {
                 return redirect()->back();
             }
@@ -109,7 +133,7 @@ class CartController extends Controller
             $totalPrice += $product->price * $item['amount'];
         }
 
-        // Kreiraj narudžbinu
+        // Kreiraj narudzbu
         $order = Orders::create([
             'user_id' => Auth::id(),
             'price' => $totalPrice,
@@ -126,15 +150,51 @@ class CartController extends Controller
                 'product_id' => $product->id,
                 'amount' => $item['amount'],
                 'price' => $product->price * $item['amount'],
+
             ]);
         }
 
         // Očisti korpu iz sesije
         Session::forget('product');
 
-        // Prebaci korisnika na stranicu sa zahvalnicom
+        // Prebaci korisnika na stranicu sa porukom
         return view('thankYou');
     }
+
+    public function update(Request $request)
+    {
+        $cart = Session::get('product', []);
+
+        if ($request->has('group')) {
+            foreach ($request->group as $index => $item) {
+                if (isset($cart[$index])) {
+                    $cart[$index]['amount'] = max(1, (int) $item['amount']); // Sprečava negativne ili 0 vrednosti
+                }
+            }
+        }
+
+        // Ažuriraj korpu u sesiji
+        Session::put('product', $cart);
+
+        return redirect()->route('cart.all'); // Osvježi stranicu nakon ažuriranja
+    }
+
+    public function updateQuantity(Request $request)
+    {
+        $cart = Session::get('product', []);
+
+        $index = $request->input('index');
+        $newAmount = max(1, (int) $request->input('amount'));
+
+        if (isset($cart[$index])) {
+            $cart[$index]['amount'] = $newAmount;
+            Session::put('product', $cart);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+
 
 
 

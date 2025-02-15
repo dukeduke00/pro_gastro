@@ -1,0 +1,133 @@
+.all_products
+{
+    padding-top: 70px;
+    padding-bottom: 60px;
+}
+
+.product_single
+{
+    border: none !important;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+
+}
+
+.product_info
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.product_name
+{
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.product_price
+{
+    font-weight: 500;
+}
+
+.product_details
+{
+    border: #5aa4cf 1px solid;
+    padding: 5px 20px;
+    color: white;
+    background-color: #5aa4cf;
+    text-decoration: none;
+    border-radius: 1rem;
+}
+
+.product_details:hover
+{
+    color: #5aa4cf;
+    background-color: #ffffff;
+    transition: 0.3s;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #f7f7f7;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    width: fit-content;
+    margin: 20px auto 60px;
+}
+
+.pagination li:first-child {
+    margin-left: 15px;
+}
+
+.pagination li:last-child {
+    margin-right: 10px;
+}
+
+.pagination li {
+    list-style: none;
+}
+
+.pagination a,
+.pagination span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pagination a:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination .active a {
+    background: #098ec9 !important;
+    color: #fff !important;
+}
+
+.pagination .dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    font-weight: bold;
+    color: gray;
+    pointer-events: none;
+}
+
+.pagination .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+    .pagination {
+        padding: 10px;
+    }
+
+    .pagination a,
+    .pagination span,
+    .pagination .dots {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+}
+
+
+

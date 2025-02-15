@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="container d-flex justify-content-center mt-5 mb-5">
+    <div style="margin-top: 130px; margin-bottom: 100px" class="container d-flex justify-content-center ">
         <div class="card shadow-lg p-4" style="max-width: 500px; width: 100%;">
             <h3 class="text-center text-warning mb-3">Edit Product</h3>
 
