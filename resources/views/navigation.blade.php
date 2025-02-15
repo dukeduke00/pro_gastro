@@ -8,10 +8,15 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">About</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('about') }}">About</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Contact</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('products') }}">Products</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ route('contact') }}">Contact</a>
                 </li>
 
                 <li class="nav-item">

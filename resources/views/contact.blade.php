@@ -1,11 +1,10 @@
 @extends('layout')
 
 @section('page_name')
-    ProGastro
+    Contact
 @endsection
 
 @section('content')
 
-    Pocetna sranica
-
+    Kontakt stranica
 @endsection
