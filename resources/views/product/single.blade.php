@@ -22,9 +22,15 @@
 
                     <h4 class="single_product_brand">{{ $id->brand }}</h4>
                     <h3 class="single_product_name">{{ $id->name }}</h3>
-                    <p class="single_product_description">{{ $id->description }}</p>
+                <ul class="product-description">
+                    @foreach(explode("\n", $id->description) as $line)
+                        <li>{{ $line }}</li>
+                    @endforeach
+                </ul>
 
-                    @if(Auth::check() && Auth::user()->role === 'admin')
+
+
+            @if(Auth::check() && Auth::user()->role === 'admin')
                         <p class="single_product_admin_amount">Amount: {{ $id->quantity }} </p>
 
                     @else

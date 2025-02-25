@@ -18,9 +18,11 @@
 .single_product_right {
     display: flex;
     flex-direction: column;
-    margin-bottom: 138px;
+    min-height: 200px;
+    margin-bottom: auto;
     gap: 15px;
 }
+
 
 .single_product_brand
 {
@@ -140,6 +142,30 @@
     background-color: #ffffff;
     transition: 0.4s;
 }
+
+.product-description {
+    list-style: none; /* Uklanja podrazumevane tačke */
+    padding-left: 0;
+}
+
+.product-description li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.product-description li::before {
+    content: "-";
+    font-size: 18px;
+    color: black;
+    line-height: 1;
+    display: inline-block;
+    width: 10px;
+    text-align: center;
+}
+
+
 
 @media(max-width: 1245px)
 {

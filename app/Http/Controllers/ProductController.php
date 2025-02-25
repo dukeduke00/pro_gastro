@@ -83,7 +83,6 @@ class ProductController extends Controller
     public function delete(Products $id)
     {
         $id->delete();
-
         return redirect('/');
     }
 
